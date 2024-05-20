@@ -41,7 +41,11 @@ exports.handler = async function (event, context) {
                 ContentType: "image"
             }).promise();
 
+            console.log(`Successfully resized image to ${size}x${size}`);
+
         }
+
+        console.log('Successfully resized image');
 
         context.succeed(`Successfully resized image: ${key}`);
 
