@@ -8,11 +8,12 @@ const THUMBNAIL_SIZES = [100, 200, 300, 400, 500, 600, 700, 800, 900];
 
 exports.handler = async function (event, context) {
 
-    console.log('Received S3 event:', JSON.stringify(event, null, 2));
-
-    if (event.Records[0].eventName === "ObjectRemoved:Delete") {
-        return;
+    //Check if it's sns event
+    if (event.Records[0].EventSource === "aws:sns") {
+        event = JSON.parse(event.Records[0].Sns.Message);
     }
+
+    console.log('Received S3 event:', JSON.stringify(event, null, 2));
 
     const bucket = event.Records[0].s3.bucket.name;
     const key = event.Records[0].s3.object.key;
